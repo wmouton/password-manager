@@ -1,5 +1,5 @@
-import sys
 import sqlite3
+
 
 def create_table():
     db = sqlite3.connect('.database.db')
@@ -10,3 +10,11 @@ def create_table():
         EMAIL TEXT NOT NULL
     );
     '''
+
+    cur = db.cursor()
+    cur.execute(statement)
+    db.close()
+    print('database created successfully!')
+
+
+create_table()
