@@ -39,3 +39,11 @@ def create_new_password():
     db.close()
     print(f'password for {website} has been successfully created.')
 
+
+def retrieve_password(website):
+    db = sqlite3.connect('.database.db')
+    statement = 'SELECT password FROM MANAGER where WEBSITE = ?'
+    cur = db.cursor()
+    items = cur.execute(statement, (website, ))
+    password_list = [i for i in items]
+    return password_list[-1][0]
