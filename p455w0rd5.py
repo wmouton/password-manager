@@ -2,6 +2,7 @@ import sys
 import sqlite3
 
 
+# creating a database table
 def create_table():
     db = sqlite3.connect('.database.db')
     statement = '''
@@ -16,12 +17,13 @@ def create_table():
     cur = db.cursor()
     cur.execute(statement)
     db.close()
-    print('database created successfully!')
+    # print('database created successfully!')
 
 
 create_table()
 
 
+# create a new password
 def create_new_password():
     db = sqlite3.connect('.database.db')
     statement = '''
@@ -41,13 +43,14 @@ def create_new_password():
     print(f'password for {website} has been successfully created.')
 
 
+# password retrieval
 def retrieve_password(website):
     db = sqlite3.connect('.database.db')
     statement = 'SELECT password FROM MANAGER where WEBSITE = ?'
     cur = db.cursor()
     items = cur.execute(statement, (website, ))
     password_list = [i for i in items]
-    return password_list[-1][0]
+    return f'The password for {website} is {password_list[-1][0]}'
 
 
 num_of_args = 1
@@ -58,6 +61,25 @@ if len(sys.argv) > num_of_args:
     else:
         print(retrieve_password(sys.argv[1]))
 
+
+# email retrieval
+def retrieve_email(website):
+    db = sqlite3.connect('.database.db')
+    statement = 'SELECT email FROM MANAGER where WEBSITE = ?'
+    cur = db.cursor()
+    items = cur.execute(statement, (website, ))
+    email_list = [i for i in items]
+    return f'The Email for {website} is {email_list[-1][0]}'
+
+
+num_of_args = 1
+
+if len(sys.argv) > num_of_args:
+    if sys.argv[1] == 'new':
+        create_new_password()
+    else:
+        print(retrieve_email(sys.argv[1]))
+# ---------------------------------------------------------
 else:
     print('''
         Usage:
