@@ -1,3 +1,4 @@
+import sys
 import sqlite3
 
 
@@ -47,3 +48,19 @@ def retrieve_password(website):
     items = cur.execute(statement, (website, ))
     password_list = [i for i in items]
     return password_list[-1][0]
+
+
+num_of_args = 1
+
+if len(sys.argv) > num_of_args:
+    if sys.argv[1] == 'new':
+        create_new_password()
+    else:
+        print(retrieve_password(sys.argv[1]))
+
+else:
+    print('''
+        Usage:
+        p455w0rds.py new - to create a new password
+        p455w0rds.py <website> - to retrieve the website password
+    ''')
